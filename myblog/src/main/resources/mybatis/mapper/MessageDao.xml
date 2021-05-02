@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yang.blog.dao.MessageDao">
+
+    <!--查询所有父留言-->
+    <select id="findByParentIdNull" resultType="com.yang.blog.entity.Message">
+        select * from t_message where parent_message_id = #{parentId} order by create_time desc
+    </select>
+
+    <!--查询出一级回复-->
+    <select id="findByParentIdNotNull" resultType="com.yang.blog.entity.Message">
+        select * from t_message where parent_message_id = #{id} order by create_time desc
+    </select>
+
+    <!--查询所有二级回复-->
+    <select id="findByReplayId" resultType="com.yang.blog.entity.Message">
+        select * from t_message where parent_message_id = #{childId} order by create_time desc
+    </select>
+
+    <!--添加一个留言-->
+    <insert id="saveMessage">
+        insert into t_message(
+        nickname,
+        email,
+        content,
+        head_img,
+        create_time,
+        parent_message_id,
+        admin_message
+        ) values (
+        #{nickname},
+        #{email},
+        #{content},
+        #{headImg},
+        #{createTime},
+        #{parentMessageId},
+        #{adminMessage}
+        )
+    </insert>
+
+    <!--删除留言-->
+    <delete id="deleteMessage">
+        delete from t_message where id = #{id}
+    </delete>
+
+</mapper>

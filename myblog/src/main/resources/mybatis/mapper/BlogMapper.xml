@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yang.blog.dao.BlogDao">
+
+    <!--新增博客-->
+    <insert id="saveBlog">
+        insert into t_blog(
+            id,
+            appreciation,
+            commentabled,
+            content,
+            create_time,
+            description,
+            first_picture,
+            flag,
+            published,
+            recommend,
+            share_statement,
+            title,
+            update_time,
+            views,
+            type_id,
+            user_id,
+            comment_count
+        ) values (
+            #{id},
+            #{appreciation},
+            #{commentabled},
+            #{content},
+            #{createTime},
+            #{description},
+            #{firstPicture},
+            #{flag},
+            #{published},
+            #{recommend},
+            #{shareStatement},
+            #{title},
+            #{updateTime},
+            #{views},
+            #{typeId},
+            #{userId},
+            #{commentCount}
+        )
+    </insert>
+
+    <!--resultMap封装查询出来用来显示的blog-->
+    <resultMap id="blogvo" type="com.yang.blog.vo.BlogQuery">
+        <id property="id" column="id"/>
+        <result property="title" column="title"/>
+        <result property="published" column="published"/>
+        <result property="recommend" column="recommend"/>
+        <result property="typeId" column="type_id"/>
+        <result property="updateTime" column="update_time"/>
+        <association property="type" javaType="com.yang.blog.entity.Type">
+            <id property="id" column="id"/>
+            <result property="name" column="name"/>
+        </association>
+    </resultMap>
+
+    <!--查询出所有博客，分页显示，封装到自定义vo中-->
+    <select id="getAllBlogs" resultMap="blogvo">
+        select
+        b.id,
+        b.title,
+        b.update_time,
+        b.recommend,
+        b.published,
+        b.type_id,
+        t.id,
+        t.name
+        from t_blog b
+        join t_type t
+        on b.type_id = t.id
+        order by b.update_time desc
+    </select>
+
+    <!--删除博客-->
+    <delete id="deleteBlog">
+        delete from t_blog where id = #{id}
+    </delete>
+
+    <!--根据id查询出要修改的博客-->
+    <select id="getBlogById" resultType="com.yang.blog.vo.BlogEdit">
+        select
+            id,
+            appreciation,
+            commentabled,
+            content,
+            description,
+            first_picture,
+            flag,
+            published,
+            recommend,
+            share_statement,
+            title,
+            type_id
+        from t_blog
+        where id=#{id}
+
+    </select>
+
+    <!--修改博客-->
+    <update id="updateBlog">
+        update t_blog set
+            appreciation = #{appreciation},
+            commentabled = #{commentabled},
+            content = #{content},
+            description = #{description},
+            first_picture = #{firstPicture},
+            flag = #{flag},
+            published = #{published},
+            recommend = #{recommend},
+            share_statement = #{shareStatement},
+            title = #{title},
+            type_id = #{typeId},
+            update_time = #{updateTime}
+            where id = #{id}
+    </update>
+
+    <!--搜索博客-->
+    <select id="searchBlogs" resultMap="blogvo">
+        <bind name="pattern" value="'%' + title + '%'"/>
+        select
+        b.id,
+        b.title,
+        b.type_id,
+        b.recommend,
+        b.update_time,
+        b.published,
+        t.id,
+        t.name
+        from t_blog b
+        join t_type t
+        on b.type_id = t.id
+        <where>
+            <if test="typeId != null">
+                b.type_id = #{typeId}
+            </if>
+            <if test="title != null">
+                and b.title like #{pattern}
+            </if>
+        </where>
+    </select>
+
+
+
+
+
+
+
+    <resultMap id="blogPage" type="com.yang.blog.vo.BlogPage">
+        <id property="id" column="id"/>
+        <result property="title" column="title"/>
+        <result property="views" column="views"/>
+        <result property="nickname" column="nickname"/>
+        <result property="headImg" column="head_img"/>
+        <result property="firstPicture" column="first_picture"/>
+        <result property="description" column="description"/>
+        <result property="commentCount" column="comment_count"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="typeName" column="name"/>
+        <result property="createTime" column="create_time"/>
+    </resultMap>
+
+    <!--查询博客列表-->
+    <select id="getBlogPage" resultMap="blogPage">
+        select b.id,b.title,b.views,u.nickname,u.head_img,b.first_picture,b.description,
+        b.comment_count,b.update_time,t.name
+        from t_blog b, t_user u,t_type t
+        where b.user_id = u.id and b.type_id = t.id and b.published = true order by b.update_time desc
+    </select>
+
+    <!--查询最新推荐的博客列表-->
+    <select id="getRecommendBlog" resultType="com.yang.blog.vo.BlogRecommend">
+        select * from t_blog where recommend = true and published = true order by create_time desc limit 4
+    </select>
+
+    <!--搜索博客-->
+    <select id="searchBlogPage" resultMap="blogPage">
+        <bind name="pattern" value="'%' + query + '%'"/>
+        select b.id,b.title,b.views,u.nickname,u.head_img,b.first_picture,b.description,
+        b.comment_count,b.update_time,t.name
+        from t_blog b, t_user u,t_type t
+        where b.user_id = u.id and b.type_id = t.id
+        and b.published = true
+        and (b.title like #{pattern} or b.content like #{pattern})
+        order by b.update_time desc
+    </select>
+
+    <!--查询博客总数-->
+    <select id="getBlogTotal" resultType="java.lang.Integer">
+        select count(*) from t_blog where published = true
+    </select>
+
+    <!--查询浏览次数-->
+    <select id="getBlogViewTotal" resultType="java.lang.Integer">
+        select coalesce(sum(views),0) from t_blog
+    </select>
+
+    <!--查询评论次数-->
+    <select id="getBlogCommentTotal" resultType="java.lang.Integer">
+        select count(*) from t_comment
+    </select>
+
+    <!--查询留言次数-->
+    <select id="getBlogMessageTotal" resultType="java.lang.Integer">
+        select count(*) from t_message
+    </select>
+
+
+
+
+    <resultMap id="blogDetail" type="com.yang.blog.vo.BlogDetail">
+        <id property="id" column="bid"/>
+        <result property="shareStatement" column="share_statement"/>
+        <result property="flag" column="flag"/>
+        <result property="content" column="content"/>
+        <result property="commentabled" column="commentabled"/>
+        <result property="appreciation" column="appreciation"/>
+        <result property="title" column="title"/>
+        <result property="views" column="views"/>
+        <result property="nickname" column="nickname"/>
+        <result property="headImg" column="head_img"/>
+        <result property="firstPicture" column="first_picture"/>
+        <result property="commentCount" column="comment_count"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="typeName" column="name"/>
+    </resultMap>
+
+    <!--查询博客详情-->
+    <select id="getBlogDetail" resultMap="blogDetail">
+        select
+            b.id bid,
+            b.first_picture,
+            b.flag,
+            b.title,
+            b.content,
+            b.views,
+            b.comment_count,
+            b.update_time,
+            b.commentabled,
+            b.share_statement,
+            b.appreciation,
+            u.nickname,
+            u.head_img,
+            t.name
+        from t_blog b, t_user u, t_type t
+        where b.user_id = u.id and b.type_id = t.id
+        and b.id = #{id}
+    </select>
+
+    <!--更新博客访问数量,自增-->
+    <update id="updateBlogViews">
+        update t_blog set views=views+1 where id = #{id}
+    </update>
+
+    <!--根据id查询博客评论次数，并更新-->
+    <update id="getCommentCountById">
+        update t_blog b set b.comment_count = (
+        select count(*) from t_comment c where c.blog_id = #{id}
+        ) where id = #{id}
+    </update>
+
+
+    <select id="getBlogsByTypeId" resultMap="blogPage">
+        select
+            b.id,
+            b.title,
+            b.first_picture,
+            b.views,
+            b.comment_count,
+            b.update_time,
+            b.description,
+            b.create_time,
+            t.name,
+            u.nickname,
+            u.head_img
+        from t_blog b, t_type t, t_user u
+        where b.type_id = t.id and b.user_id = u.id
+        and b.type_id = #{typeId}
+        and b.published = true order by b.update_time desc
+    </select>
+
+
+
+    <!--查询出所有博客，用于时间轴页面展示分页显示，封装到自定义vo中-->
+    <select id="getAllBlogsTime" resultMap="blogvo">
+        select
+        b.id,
+        b.title,
+        b.update_time,
+        b.recommend,
+        b.published,
+        b.type_id,
+        t.id,
+        t.name
+        from t_blog b
+        join t_type t
+        on b.type_id = t.id
+        where b.published = true
+        order by b.update_time desc
+    </select>
+
+</mapper>

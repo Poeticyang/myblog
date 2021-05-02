@@ -1,0 +1,7 @@
+2021-04-15 12:46:39.137  INFO 17716 --- [main] com.yang.blog.MyblogApplicationTests     : Starting MyblogApplicationTests using Java 1.8.0_171 on LAPTOP-9GROVQJR with PID 17716 (started by Yang in D:\Learning\JavaCodeSpace\myblog\myblog)
+2021-04-15 12:46:39.137 DEBUG 17716 --- [main] com.yang.blog.MyblogApplicationTests     : Running with Spring Boot v2.4.4, Spring v5.3.5
+2021-04-15 12:46:39.138  INFO 17716 --- [main] com.yang.blog.MyblogApplicationTests     : The following profiles are active: dev
+2021-04-15 12:46:41.839  INFO 17716 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2021-04-15 12:46:42.065  INFO 17716 --- [main] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
+2021-04-15 12:46:42.796  INFO 17716 --- [main] com.yang.blog.MyblogApplicationTests     : Started MyblogApplicationTests in 4.137 seconds (JVM running for 5.247)
+2021-04-15 12:46:43.193  INFO 17716 --- [SpringContextShutdownHook] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'applicationTaskExecutor'

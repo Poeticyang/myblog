@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yang.blog.dao.CommentDao">
+
+    <!--查询父级评论-->
+    <select id="findByBlogIdParentIdNull" resultType="com.yang.blog.entity.Comment">
+        select
+        id,
+        nickname,
+        email,
+        content,
+        head_img headImg,
+        create_time createTime,
+        blog_id blogId,
+        parent_comment_id parentCommentId,
+        admin_comment adminComment
+        from t_comment where blog_id = #{blogId} and parent_comment_id = #{blogParentId} order by create_time desc
+    </select>
+
+    <!--查询一级回复-->
+    <select id="findByBlogIdParentNotNull" resultType="com.yang.blog.entity.Comment">
+        select
+            id,
+            nickname,
+            email,
+            content,
+            head_img headImg,
+            create_time createTime,
+            blog_id blogId,
+            parent_comment_id parentCommentId,
+            admin_comment adminComment
+        from t_comment where blog_id = #{blogId} and parent_comment_id = #{id} order by create_time desc
+    </select>
+
+    <!--查询二级回复-->
+    <select id="findByBlogIdAndReplayId" resultType="com.yang.blog.entity.Comment">
+        select
+            id,
+            nickname,
+            email,
+            content,
+            head_img headImg,
+            create_time createTime,
+            blog_id blogId,
+            parent_comment_id parentCommentId,
+            admin_comment adminComment
+            from t_comment where blog_id = #{blogId} and parent_comment_id = #{childId} order by create_time desc
+    </select>
+
+    <!--添加评论-->
+    <insert id="saveComment">
+        insert into t_comment(
+            nickname,
+            email,
+            content,
+            head_img,
+            create_time,
+            blog_id,
+            parent_comment_id,
+            admin_comment
+        ) values (
+            #{nickname},
+            #{email},
+            #{content},
+            #{headImg},
+            #{createTime},
+            #{blogId},
+            #{parentCommentId},
+            #{adminComment}
+        )
+    </insert>
+
+    <!--删除评论-->
+    <delete id="deleteComment">
+        delete from t_comment where id = #{id}
+    </delete>
+    
+    <!--//根据id查询出某个评论
+    <select id="getCommentById" resultType="com.yang.blog.entity.Comment">
+        select * from t_comment where id = #{id}
+    </select>
+-->
+    <!--<select id="getCommentByParentCommentId" resultType="com.yang.blog.entity.Comment">
+        select * from t_comment where parent_comment_id = #{parentCommentId}
+    </select>-->
+</mapper>

@@ -1,0 +1,3 @@
+2021-04-17 18:52:07.517  INFO 264 --- [main] com.yang.blog.MyblogApplicationTests     : Starting MyblogApplicationTests using Java 1.8.0_171 on LAPTOP-9GROVQJR with PID 264 (started by Yang in D:\Learning\JavaCodeSpace\myblog\myblog)
+2021-04-17 18:52:07.520  INFO 264 --- [main] com.yang.blog.MyblogApplicationTests     : The following profiles are active: pro
+2021-04-17 18:52:11.675  INFO 264 --- [main] com.yang.blog.MyblogApplicationTests     : Started MyblogApplicationTests in 4.828 seconds (JVM running for 6.252)

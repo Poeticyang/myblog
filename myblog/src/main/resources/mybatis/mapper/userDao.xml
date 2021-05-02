@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yang.blog.dao.UserDao">
+
+    <!--根据用户名和密码查询出来用户-->
+    <select id="getUserByNameAndPwd" resultType="com.yang.blog.entity.User">
+        select * from t_user where username = #{userName} and password = #{passWord}
+    </select>
+
+</mapper>

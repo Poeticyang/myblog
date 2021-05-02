@@ -1,0 +1,6 @@
+2021-04-22 22:52:54.429  INFO 7968 --- [main] com.yang.blog.MyblogApplicationTests     : Starting MyblogApplicationTests using Java 1.8.0_171 on LAPTOP-9GROVQJR with PID 7968 (started by Yang in D:\Learning\JavaCodeSpace\myblog\myblog)
+2021-04-22 22:52:54.431  INFO 7968 --- [main] com.yang.blog.MyblogApplicationTests     : The following profiles are active: pro
+2021-04-22 22:52:58.431  INFO 7968 --- [main] com.yang.blog.MyblogApplicationTests     : Started MyblogApplicationTests in 4.66 seconds (JVM running for 6.014)
+2021-04-22 23:04:47.036  INFO 14552 --- [main] com.yang.blog.MyblogApplicationTests     : Starting MyblogApplicationTests using Java 1.8.0_171 on LAPTOP-9GROVQJR with PID 14552 (started by Yang in D:\Learning\JavaCodeSpace\myblog\myblog)
+2021-04-22 23:04:47.039  INFO 14552 --- [main] com.yang.blog.MyblogApplicationTests     : The following profiles are active: pro
+2021-04-22 23:04:52.371  INFO 14552 --- [main] com.yang.blog.MyblogApplicationTests     : Started MyblogApplicationTests in 6.356 seconds (JVM running for 8.553)

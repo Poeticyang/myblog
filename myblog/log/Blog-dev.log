@@ -1,0 +1,7 @@
+2021-04-16 22:10:57.613  INFO 10140 --- [main] com.yang.blog.MyblogApplicationTests     : Starting MyblogApplicationTests using Java 1.8.0_171 on LAPTOP-9GROVQJR with PID 10140 (started by Yang in D:\Learning\JavaCodeSpace\myblog\myblog)
+2021-04-16 22:10:57.615 DEBUG 10140 --- [main] com.yang.blog.MyblogApplicationTests     : Running with Spring Boot v2.4.4, Spring v5.3.5
+2021-04-16 22:10:57.616  INFO 10140 --- [main] com.yang.blog.MyblogApplicationTests     : The following profiles are active: dev
+2021-04-16 22:10:59.932  INFO 10140 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2021-04-16 22:11:00.128  INFO 10140 --- [main] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
+2021-04-16 22:11:00.659  INFO 10140 --- [main] com.yang.blog.MyblogApplicationTests     : Started MyblogApplicationTests in 3.425 seconds (JVM running for 4.293)
+2021-04-16 22:11:00.893  INFO 10140 --- [SpringContextShutdownHook] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'applicationTaskExecutor'

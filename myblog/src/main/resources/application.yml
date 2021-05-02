@@ -1,0 +1,16 @@
+spring:
+  thymeleaf:
+    mode: HTML
+  profiles:
+    active: pro
+
+
+mybatis:
+  type-aliases-package: com.yang.blog.entity
+  mapper-locations: classpath:mybatis/mapper/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+
+
+comment.avatar: /images/nice.jpg
+message.avatar: /images/nice.jpg
